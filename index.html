@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎓 Edexcel IAL Mathematics — June 2013 Bundle</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<script>
+tailwind.config = {
+  darkMode: 'class',
+  theme: { extend: { fontFamily: { 'arabic': ['Cairo','sans-serif'], 'english': ['Inter','sans-serif'] } } }
+}
+</script>
+<style>
+*{box-sizing:border-box}
+body{font-family:'Cairo',sans-serif;margin:0;background:#f8fafc;transition:background .3s}
+.dark body{background:#0f172a;color:#e2e8f0}
+body.en-mode{font-family:'Inter',sans-serif}
+.correct{background-color:#dcfce7!important;border-color:#16a34a!important}
+.dark .correct{background-color:#052e16!important;border-color:#16a34a!important}
+.incorrect{background-color:#fee2e2!important;border-color:#dc2626!important}
+.dark .incorrect{background-color:#450a0a!important;border-color:#dc2626!important}
+.timer-warning{color:#dc2626!important;animation:pulse 1s infinite}
+@keyframes pulse{50%{opacity:.5}}
+@media print{
+  .no-print{display:none!important}
+  .page-break{page-break-before:always}
+  body{padding-top:0;background:white}
+  .sidebar{display:none}
+  .main-container{margin:0!important}
+  .question-card{break-inside:avoid;box-shadow:none;border:1px solid #ccc}
+}
+.success-badge{display:inline-block;padding:4px 12px;border-radius:20px;font-weight:bold;font-size:.875rem}
+.grade-excellent{background:#dcfce7;color:#166534}
+.grade-good{background:#fef3c7;color:#92400e}
+.grade-pass{background:#dbeafe;color:#1e40af}
+.grade-fail{background:#fee2e2;color:#991b1b}
+.question-card{
+  background:white;border-radius:10px;padding:14px 16px;margin-bottom:10px;
+  box-shadow:0 2px 6px rgba(0,0,0,.05);border-left:4px solid #8b5cf6;
+  transition:all .3s;font-size:.87rem;line-height:1.7;scroll-margin-top:80px;
+}
+.dark .question-card{background:#1e293b;box-shadow:0 2px 6px rgba(0,0,0,.3)}
+[dir="rtl"] .question-card{border-left:none;border-right:4px solid #8b5cf6}
+.question-card:hover{box-shadow:0 4px 12px rgba(0,0,0,.09);transform:translateY(-1px)}
+.dark .question-card:hover{box-shadow:0 4px 12px rgba(0,0,0,.5)}
+.marks-badge{display:inline-block;background:linear-gradient(135deg,#8b5cf6,#a78bfa);color:white;padding:2px 8px;border-radius:10px;font-size:.66rem;font-weight:bold;margin-left:6px}
+.answer-input{border:2px solid #e5e7eb;border-radius:6px;padding:6px 10px;width:100%;max-width:320px;font-family:inherit;font-size:.82rem;transition:all .3s;background:white;color:#1f2937}
+.dark .answer-input{background:#0f172a;color:#e2e8f0;border-color:#334155}
+.answer-input:focus{outline:none;border-color:#8b5cf6;box-shadow:0 0 0 3px rgba(139,92,246,.1)}
+.answer-input.is-correct{border-color:#16a34a;background:#f0fdf4}
+.answer-input.is-incorrect{border-color:#dc2626;background:#fef2f2}
+.dark .answer-input.is-correct{background:#052e16}
+.dark .answer-input.is-incorrect{background:#450a0a}
+.section-header{color:white;padding:12px 18px;border-radius:10px;margin-bottom:14px;box-shadow:0 4px 12px rgba(0,0,0,.15);scroll-margin-top:60px}
+.section-header h2{margin:0;font-size:.95rem;font-weight:bold;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.paper-badge{display:inline-block;background:rgba(255,255,255,.25);padding:3px 10px;border-radius:8px;font-size:.72rem}
+.reveal-btn{background:linear-gradient(135deg,#8b5cf6,#a78bfa);color:white;border:none;padding:3px 10px;border-radius:6px;cursor:pointer;font-size:.7rem;font-weight:600;transition:all .2s}
+.reveal-btn:hover{transform:scale(1.05);box-shadow:0 2px 8px rgba(139,92,246,.4)}
+.answer-box{background:linear-gradient(135deg,#ede9fe,#ddd6fe);border:2px solid #8b5cf6;border-radius:8px;padding:8px 12px;margin-top:8px;font-size:.8rem;color:#5b21b6}
+.dark .answer-box{background:#4c1d95;border-color:#8b5cf6;color:#ddd6fe}
+.top-nav{position:fixed;top:0;left:0;right:0;background:white;box-shadow:0 2px 10px rgba(0,0,0,.1);z-index:200;padding:5px 10px;border-bottom:2px solid #e5e7eb}
+.dark .top-nav{background:#1e293b;border-bottom-color:#334155}
+.top-nav-container{max-width:1500px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px}
+.nav-title{font-weight:bold;color:#8b5cf6;font-size:.78rem;white-space:nowrap}
+.dark .nav-title{color:#a78bfa}
+.nav-links{display:flex;gap:3px;flex-wrap:wrap}
+.nav-link{padding:3px 7px;background:#f3f4f6;color:#4b5563;border-radius:6px;text-decoration:none;font-size:.64rem;font-weight:600;transition:all .2s;white-space:nowrap}
+.dark .nav-link{background:#334155;color:#cbd5e1}
+.nav-link:hover{background:#ede9fe;color:#8b5cf6}
+.dark .nav-link:hover{background:#4c1d95;color:#a78bfa}
+.progress-container{flex:1;min-width:70px;max-width:180px;display:flex;align-items:center;gap:6px}
+.progress-bar-wrapper{flex:1;height:6px;background:#e5e7eb;border-radius:3px;overflow:hidden}
+.dark .progress-bar-wrapper{background:#334155}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,#8b5cf6,#a78bfa);transition:width .3s;border-radius:3px}
+.progress-text{font-size:.66rem;color:#6b7280;font-weight:600;white-space:nowrap}
+.sidebar{position:fixed;top:55px;right:10px;width:235px;max-height:calc(100vh - 70px);overflow-y:auto;background:white;border-radius:10px;box-shadow:0 4px 16px rgba(0,0,0,.1);padding:10px;z-index:100;font-size:.66rem}
+.dark .sidebar{background:#1e293b;box-shadow:0 4px 16px rgba(0,0,0,.5)}
+[dir="ltr"] .sidebar{right:auto;left:10px}
+.sidebar::-webkit-scrollbar{width:4px}
+.sidebar::-webkit-scrollbar-thumb{background:#d1d5db;border-radius:2px}
+.dark .sidebar::-webkit-scrollbar-thumb{background:#475569}
+.sidebar-title{font-weight:bold;color:#8b5cf6;margin-bottom:8px;padding-bottom:6px;border-bottom:2px solid #e5e7eb;font-size:.74rem}
+.dark .sidebar-title{color:#a78bfa;border-bottom-color:#334155}
+.sidebar-session{font-weight:bold;color:white;padding:4px 8px;margin:6px 0 3px;border-radius:6px;font-size:.68rem;background:#8b5cf6}
+.sidebar-link{display:flex;align-items:center;gap:4px;padding:2px 8px;color:#6b7280;text-decoration:none;border-radius:4px;font-size:.63rem;margin:1px 0;transition:all .2s}
+.dark .sidebar-link{color:#94a3b8}
+.sidebar-link:hover{background:#ede9fe;color:#8b5cf6}
+.dark .sidebar-link:hover{background:#4c1d95;color:#a78bfa}
+.sidebar-link.answered{font-weight:bold;color:#8b5cf6}
+.sidebar-link.correct::before{content:'✓';color:#16a34a;font-weight:bold}
+.sidebar-link.incorrect::before{content:'✗';color:#dc2626;font-weight:bold}
+body{padding-top:55px}
+@media(min-width:1350px){
+  .main-container{margin-right:255px;margin-left:16px}
+  [dir="ltr"] .main-container{margin-left:255px;margin-right:16px}
+}
+@media(max-width:1349px){.sidebar{display:none}}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(90px,1fr));gap:8px;margin:10px 0}
+.stat-card{background:white;border-radius:8px;padding:10px;text-align:center;box-shadow:0 2px 6px rgba(0,0,0,.05)}
+.dark .stat-card{background:#1e293b}
+.stat-number{font-size:1.2rem;font-weight:bold;color:#8b5cf6}
+.dark .stat-number{color:#a78bfa}
+.stat-label{font-size:.62rem;color:#6b7280}
+.dark .stat-label{color:#94a3b8}
+.btn-action{padding:8px 16px;border-radius:8px;font-size:.8rem;font-weight:600;cursor:pointer;border:none;transition:all .3s}
+.btn-action:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.15)}
+.btn-action:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.lang-switch{display:flex;gap:3px;border:2px solid #8b5cf6;border-radius:25px;padding:3px;background:white}
+.dark .lang-switch{background:#1e293b;border-color:#a78bfa}
+.lang-btn{padding:4px 10px;border-radius:18px;cursor:pointer;font-weight:bold;transition:all .3s;border:none;font-size:.75rem;background:transparent;color:#6b7280}
+.dark .lang-btn{color:#94a3b8}
+.lang-btn.active{background:#8b5cf6;color:white}
+.svg-figure{background:#f5f3ff;border:2px dashed #8b5cf6;border-radius:8px;padding:8px;margin:8px 0;text-align:center}
+.dark .svg-figure{background:#2e1065;border-color:#a78bfa}
+.svg-figure svg{max-width:100%;height:auto}
+.svg-caption{font-size:.65rem;color:#6d28d9;font-weight:600;margin-top:4px}
+.dark .svg-caption{color:#c4b5fd}
+.floating-nav{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:white;border-radius:50px;box-shadow:0 8px 24px rgba(0,0,0,.2);padding:8px 16px;display:flex;gap:8px;z-index:100}
+.dark .floating-nav{background:#1e293b}
+.floating-btn{width:40px;height:40px;border-radius:50%;border:none;cursor:pointer;font-size:1.1rem;transition:all .2s;display:flex;align-items:center;justify-content:center}
+.floating-btn:hover{transform:scale(1.1)}
+.floating-btn.primary{background:#8b5cf6;color:white}
+.floating-btn.secondary{background:#f3f4f6;color:#4b5563}
+.dark .floating-btn.secondary{background:#334155;color:#e2e8f0}
+.toast{position:fixed;top:70px;left:50%;transform:translateX(-50%);background:#8b5cf6;color:white;padding:10px 20px;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,.2);z-index:1000;font-weight:600;font-size:.9rem;opacity:0;transition:opacity .3s;pointer-events:none}
+.toast.show{opacity:1}
+.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:500;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s}
+.modal-backdrop.show{opacity:1;pointer-events:auto}
+.modal-content{background:white;border-radius:16px;padding:24px;max-width:400px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.3);transform:scale(.9);transition:transform .3s}
+.dark .modal-content{background:#1e293b;color:#e2e8f0}
+.modal-backdrop.show .modal-content{transform:scale(1)}
+.timer-display{background:linear-gradient(135deg,#a78bfa,#8b5cf6);color:white;padding:8px 20px;border-radius:50px;font-weight:bold;font-family:monospace;font-size:1.3rem;box-shadow:0 4px 12px rgba(139,92,246,.3)}
+.timer-display.warning{background:linear-gradient(135deg,#ef4444,#dc2626);box-shadow:0 4px 12px rgba(220,38,38,.3);animation:pulse 1s infinite}
+.answered-counter{display:inline-block;background:#8b5cf6;color:white;padding:1px 6px;border-radius:10px;font-size:.6rem;margin-right:4px;min-width:16px;text-align:center}
+.hidden{display:none!important}
+</style>
+</head>
+<body class="text-gray-800 min-h-screen">
+<nav class="top-nav no-print">
+  <div class="top-nav-container">
+    <div class="nav-title">🎓 Edexcel IAL Math Jun 2013</div>
+    <div class="nav-links">
+      <a href="#fp1" class="nav-link">🧮 FP1</a>
+      <a href="#fp2" class="nav-link">∫ FP2</a>
+      <a href="#m1" class="nav-link">⚖️ M1</a>
+      <a href="#m2" class="nav-link">🏗️ M2</a>
+      <a href="#s1" class="nav-link">📊 S1</a>
+      <a href="#s3" class="nav-link">📈 S3</a>
+    </div>
+    <div class="progress-container">
+      <div class="progress-bar-wrapper"><div class="progress-bar-fill" id="progressBar" style="width:0%"></div></div>
+      <span class="progress-text" id="progressText">0%</span>
+    </div>
+    <div style="display:flex;gap:6px;align-items:center;">
+      <div class="timer-display" id="timerDisplay">09:00:00</div>
+      <button onclick="toggleTimer()" id="timerToggle" class="floating-btn secondary no-print" title="إيقاف/تشغيل">⏸️</button>
+      <button onclick="scrollToTop()" class="floating-btn secondary no-print" title="الذهاب للأعلى">⬆️</button>
+      <button onclick="toggleDarkMode()" class="floating-btn secondary no-print" title="الوضع الليلي" id="darkModeBtn">🌙</button>
+      <div class="lang-switch">
+        <button class="lang-btn active" onclick="setLanguage('ar')" id="btn-ar">عربي</button>
+        <button class="lang-btn" onclick="setLanguage('en')" id="btn-en">EN</button>
+      </div>
+    </div>
+  </div>
+</nav>
+<aside class="sidebar no-print" id="sidebar"></aside>
+<div class="main-container">
+  <div class="max-w-4xl mx-auto mb-3 text-center no-print" style="margin-top:12px;">
+    <div class="bg-white dark:bg-slate-800 p-3 rounded-xl shadow-md inline-block border-2 border-violet-100">
+      <span class="text-gray-600 dark:text-gray-300 text-sm" id="time-label">⏱️ الوقت المتبقي:</span>
+    </div>
+  </div>
+  <div class="max-w-4xl mx-auto mb-3 no-print">
+    <div class="stats-grid">
+      <div class="stat-card"><div class="stat-number">6</div><div class="stat-label" id="st-papers">أوراق امتحانية</div></div>
+      <div class="stat-card"><div class="stat-number" id="total-questions-count">0</div><div class="stat-label" id="st-questions">سؤال</div></div>
+      <div class="stat-card"><div class="stat-number" id="answered-count">0</div><div class="stat-label" id="st-answered">مُجاب</div></div>
+      <div class="stat-card"><div class="stat-number">450</div><div class="stat-label" id="st-marks">درجة</div></div>
+    </div>
+  </div>
+  <div class="max-w-4xl mx-auto mb-3 flex flex-wrap gap-2 justify-center no-print">
+    <button onclick="toggleAllAnswers()" class="btn-action bg-violet-600 hover:bg-violet-700 text-white" id="btn-toggle">👁️ إظهار/إخفاء الإجابات</button>
+    <button onclick="window.print()" class="btn-action bg-gray-800 hover:bg-gray-900 text-white" id="btn-print">🖨️ طباعة</button>
+    <button onclick="expandAll()" class="btn-action bg-teal-600 hover:bg-teal-700 text-white" id="btn-expand">📂 فتح الكل</button>
+    <button onclick="collapseAll()" class="btn-action bg-amber-600 hover:bg-amber-700 text-white" id="btn-collapse">📁 طي الكل</button>
+    <button onclick="exportData()" class="btn-action bg-blue-600 hover:bg-blue-700 text-white" id="btn-export">💾 تصدير</button>
+    <button onclick="confirmReset()" class="btn-action bg-red-600 hover:bg-red-700 text-white" id="btn-reset">🔄 إعادة تعيين</button>
+  </div>
+  <header class="max-w-4xl mx-auto bg-white dark:bg-slate-800 p-4 rounded-xl shadow-md mb-4 border-r-4 border-violet-600">
+    <div class="text-center">
+      <h1 class="text-lg md:text-xl font-bold text-gray-900 dark:text-gray-100 mb-1" id="h-title">🎓 Edexcel International Advanced Level Mathematics</h1>
+      <h2 class="text-sm text-violet-600 font-semibold" id="h-sub">June 2013 Bundle — FP1, FP2, M1, M2, S1, S3</h2>
+      <p class="text-xs text-gray-600 dark:text-gray-400 mt-1" id="h-papers">6 Papers × 1h 30m | Total Marks: 450</p>
+      <p class="text-xs text-orange-600 mt-1 font-semibold" id="h-warn">⚠️ Calculators allowed | Formulae booklet provided</p>
+    </div>
+    <div class="mt-3 flex flex-wrap justify-center gap-3 text-xs text-gray-600 dark:text-gray-400">
+      <span>👤 <input type="text" id="studentName" class="border-b border-gray-400 bg-transparent w-24 text-center dark:text-gray-100" placeholder="الاسم" oninput="saveStudentInfo()"></span>
+      <span>🏫 <input type="text" id="studentClass" class="border-b border-gray-400 bg-transparent w-20 text-center dark:text-gray-100" placeholder="الشعبة" oninput="saveStudentInfo()"></span>
+      <span>📅 <input type="text" id="examDate" class="border-b border-gray-400 bg-transparent w-20 text-center dark:text-gray-100" placeholder="التاريخ" oninput="saveStudentInfo()"></span>
+    </div>
+  </header>
+  <main class="max-w-4xl mx-auto space-y-4" id="exam-content"></main>
+  <div class="text-center no-print pb-4 mt-4">
+    <button onclick="gradeExam()" class="bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700 text-white text-base px-8 py-3 rounded-xl font-bold shadow-xl transition transform hover:scale-105 cursor-pointer" id="btn-submit">📝 تسليم وتصحيح الامتحان</button>
+  </div>
+  <div id="results-panel" class="max-w-4xl mx-auto mt-4 bg-white dark:bg-slate-800 p-5 rounded-2xl shadow-2xl border-t-4 border-violet-500 hidden no-print">
+    <h2 class="text-xl font-bold text-gray-900 dark:text-gray-100 mb-3 text-center" id="res-title">📊 نتائج الامتحان</h2>
+    <div class="grid md:grid-cols-3 gap-3 mb-3">
+      <div class="bg-blue-50 dark:bg-blue-900/30 p-3 rounded-xl text-center"><p class="text-xs dark:text-gray-300" id="rl-name">اسم الطالب</p><p id="res-name" class="font-bold text-lg text-indigo-700 dark:text-indigo-300">-</p></div>
+      <div class="bg-purple-50 dark:bg-purple-900/30 p-3 rounded-xl text-center"><p class="text-xs dark:text-gray-300" id="rl-date">التاريخ</p><p id="res-date" class="font-bold text-lg text-purple-700 dark:text-purple-300">-</p></div>
+      <div class="bg-emerald-50 dark:bg-emerald-900/30 p-3 rounded-xl text-center"><p class="text-xs dark:text-gray-300" id="rl-total">المجموع</p><p id="res-total" class="font-bold text-xl text-emerald-600">0/0</p></div>
+    </div>
+    <div class="text-center mb-3">
+      <span id="success-badge" class="success-badge grade-excellent">-</span>
+      <p id="success-percent" class="text-2xl font-bold text-emerald-600 mt-1">0%</p>
+      <p class="text-xs text-gray-500 dark:text-gray-400" id="rl-rate">نسبة النجاح</p>
+    </div>
+    <div class="flex gap-3 justify-center flex-wrap">
+      <button onclick="window.print()" class="bg-gray-700 text-white px-4 py-2 rounded-lg text-xs font-semibold cursor-pointer" id="btn-printres">🖨️ طباعة النتائج</button>
+      <button onclick="shareResults()" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-xs font-semibold cursor-pointer" id="btn-share">📤 مشاركة</button>
+    </div>
+  </div>
+  <footer class="max-w-4xl mx-auto mt-6 mb-4 text-center text-gray-500 dark:text-gray-400 text-xs no-print">
+    © Pearson Edexcel International Advanced Level Mathematics — June 2013<br>
+    Prepared by <strong>Mr. Mohammed Hesham</strong>
+  </footer>
+</div>
+<div class="floating-nav no-print">
+  <button onclick="navigateQuestion(-1)" class="floating-btn secondary" title="السؤال السابق">⬅️</button>
+  <button onclick="navigateQuestion(1)" class="floating-btn secondary" title="السؤال التالي">➡️</button>
+</div>
+<div class="modal-backdrop" id="resetModal">
+  <div class="modal-content">
+    <h3 class="text-lg font-bold mb-3" id="modal-title">⚠️ تأكيد إعادة التعيين</h3>
+    <p class="text-sm mb-4 dark:text-gray-300" id="modal-message">سيتم حذف جميع إجاباتك. هل أنت متأكد؟</p>
+    <div class="flex gap-3 justify-end">
+      <button onclick="closeModal()" class="btn-action bg-gray-300 dark:bg-slate-700 text-gray-800 dark:text-gray-200">إلغاء</button>
+      <button onclick="resetExam()" class="btn-action bg-red-600 text-white">نعم، احذف</button>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+let currentLang = 'ar';
+let answersVisible = false;
+let timeRemaining = 9 * 60 * 60; 
+let timerInterval = null;
+let timerRunning = true;
+let currentQuestionIndex = 0;
+let allQuestions = [];
+
+const STORAGE_KEY = 'edexcel_ial_math_jun_2013';
+
+const SVG_FIGURES = {
+  m2_proj: `<div class="svg-figure"><svg viewBox="0 0 250 150" width="250">
+    <line x1="20" y1="130" x2="230" y2="130" stroke="#334155" stroke-width="1.5"/>
+    <path d="M 20 130 Q 125 10 230 130" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="4"/>
+    <circle cx="125" cy="30" r="3" fill="#ef4444"/>
+    <text x="10" y="145" font-size="12">O</text>
+    <text x="120" y="20" font-size="12">H</text>
+    <text x="220" y="145" font-size="12">R</text>
+  </svg><div class="svg-caption" data-cap-ar="مسار القذيفة" data-cap-en="Projectile path">مسار القذيفة</div></div>`,
+  s1_venn: `<div class="svg-figure"><svg viewBox="0 0 250 150" width="250">
+    <circle cx="100" cy="75" r="40" fill="#f59e0b" fill-opacity="0.3" stroke="#f59e0b"/>
+    <circle cx="150" cy="75" r="40" fill="#3b82f6" fill-opacity="0.3" stroke="#3b82f6"/>
+    <text x="85" y="80" font-size="14">A</text>
+    <text x="155" y="80" font-size="14">B</text>
+  </svg><div class="svg-caption" data-cap-ar="مخطط فين" data-cap-en="Venn Diagram">مخطط فين</div></div>`
+};
+
+const T = {
+  time_label:{ar:'⏱️ الوقت المتبقي:',en:'⏱️ Time Remaining:'},
+  st_papers:{ar:'أوراق امتحانية',en:'Exam Papers'},
+  st_questions:{ar:'سؤال',en:'Questions'},
+  st_answered:{ar:'مُجاب',en:'Answered'},
+  st_marks:{ar:'درجة',en:'Marks'},
+  btn_toggle:{ar:'👁️ إظهار/إخفاء الإجابات',en:'👁️ Show/Hide Answers'},
+  btn_print:{ar:'🖨️ طباعة',en:'🖨️ Print'},
+  btn_expand:{ar:'📂 فتح الكل',en:'📂 Expand All'},
+  btn_collapse:{ar:'📁 طي الكل',en:'📁 Collapse All'},
+  btn_submit:{ar:'📝 تسليم وتصحيح الامتحان',en:'📝 Submit & Grade Exam'},
+  btn_export:{ar:'💾 تصدير',en:'💾 Export'},
+  btn_reset:{ar:'🔄 إعادة تعيين',en:'🔄 Reset'},
+  btn_share:{ar:'📤 مشاركة',en:'📤 Share'},
+  h_title:{ar:'🎓 Edexcel International Advanced Level Mathematics',en:'🎓 Edexcel International Advanced Level Mathematics'},
+  h_sub:{ar:'June 2013 Bundle — FP1, FP2, M1, M2, S1, S3',en:'June 2013 Bundle — FP1, FP2, M1, M2, S1, S3'},
+  h_papers:{ar:'6 أوراق × ساعة ونصف | المجموع: 450 درجة',en:'6 Papers × 1h 30m | Total Marks: 450'},
+  h_warn:{ar:'⚠️ الآلة الحاسبة مسموحة | كتيب الصيغ متوفر',en:'⚠️ Calculators allowed | Formulae booklet provided'},
+  ph_name:{ar:'الاسم',en:'Name'},
+  ph_class:{ar:'الشعبة',en:'Class'},
+  ph_date:{ar:'التاريخ',en:'Date'},
+  res_title:{ar:'📊 نتائج الامتحان',en:'📊 Exam Results'},
+  rl_name:{ar:'اسم الطالب',en:'Student Name'},
+  rl_date:{ar:'التاريخ',en:'Date'},
+  rl_total:{ar:'المجموع',en:'Total'},
+  rl_rate:{ar:'نسبة النجاح',en:'Success Rate'},
+  btn_printres:{ar:'🖨️ طباعة النتائج',en:'🖨️ Print Results'},
+  sidebar_title:{ar:'📑 فهرس الأسئلة',en:'📑 Questions Index'},
+  marks:{ar:'درجة',en:'marks'},
+  answer_ph:{ar:'اكتب الإجابة هنا...',en:'Type answer here...'},
+  q_word:{ar:'السؤال',en:'Question'},
+  questions_word:{ar:'سؤال',en:'Questions'},
+  grade_excellent:{ar:'ممتاز 🌟',en:'Excellent 🌟'},
+  grade_good:{ar:'جيد جداً 👍',en:'Very Good 👍'},
+  grade_pass:{ar:'جيد ✓',en:'Good ✓'},
+  grade_fail:{ar:'يحتاج تحسين 📚',en:'Needs Improvement 📚'},
+  timeup:{ar:'انتهى الوقت!',en:"Time's up!"},
+  student_default:{ar:'طالب',en:'Student'},
+  reset_title:{ar:'⚠️ تأكيد إعادة التعيين',en:'⚠️ Confirm Reset'},
+  reset_message:{ar:'سيتم حذف جميع إجاباتك. هل أنت متأكد؟',en:'All your answers will be deleted. Are you sure?'},
+  reset_success:{ar:'✅ تم إعادة التعيين بنجاح',en:'✅ Reset successful'},
+  save_success:{ar:'💾 تم الحفظ تلقائياً',en:'💾 Saved automatically'},
+  export_success:{ar:'💾 تم التصدير بنجاح',en:'💾 Exported successfully'},
+  copy_success:{ar:'📋 تم النسخ!',en:'📋 Copied!'}
+};
+
+const examData = [
+  {id:'fp1',title:{ar:'🧮 Further Pure Math FP1 (Jun 2013)',en:'🧮 Further Pure Math FP1 (Jun 2013)'},tier:'ial',color:'#0891b2',code:{ar:'6667/01 — 10 يونيو 2013 — ساعة ونصف — 75 درجة',en:'6667/01 — 10 Jun 2013 — 1h 30m — 75 Marks'},questions:[
+    {q:{ar:'المصفوفة A = [[2, -1], [3, 4]]. (أ) أوجد محدد المصفوفة A. (ب) أوجد معكوس المصفوفة A⁻¹. (ج) أوجد المصفوفة B بحيث AB = I.',en:'Matrix A = [[2, -1], [3, 4]]. (a) Find det(A). (b) Find A⁻¹. (c) Find matrix B such that AB = I.'},m:7,a:'depends',e:{ar:'(أ) 11 (ب) (1/11)[[4, 1], [-3, 2]] (ج) B = A⁻¹',en:'(a) 11 (b) (1/11)[[4, 1], [-3, 2]] (c) B = A⁻¹'}},
+    {q:{ar:'العدد المركب z = 3 + 4i. (أ) أوجد المقدار |z|. (ب) أوجد السعة arg(z) بالراديان. (ج) حل المعادلة w² = z.',en:'Complex number z = 3 + 4i. (a) Find |z|. (b) Find arg(z) in radians. (c) Solve w² = z.'},m:8,a:'depends',e:{ar:'(أ) 5 (ب) 0.927 (ج) استخدام الصيغة القطبية',en:'(a) 5 (b) 0.927 (c) Use polar form'}},
+    {q:{ar:'استخدم الاستقراء الرياضي لإثبات أن مجموع أول n حدود من المتتابعة هو n(n+1)(n+2)/3.',en:'Use mathematical induction to prove that the sum of the first n terms of the sequence is n(n+1)(n+2)/3.'},m:7,a:'depends',e:{ar:'إثبات الحالة الأساسية n=1 ثم خطوة الاستقراء',en:'Prove base case n=1 then induction step'}}
+  ]},
+  {id:'fp2',title:{ar:'∫ Further Pure Math FP2 (Jun 2013)',en:'∫ Further Pure Math FP2 (Jun 2013)'},tier:'ial',color:'#7c3aed',code:{ar:'6668/01 — 21 يونيو 2013 — ساعة ونصف — 75 درجة',en:'6668/01 — 21 Jun 2013 — 1h 30m — 75 Marks'},questions:[
+    {q:{ar:'أوجد مفكوك maclaurin للدالة f(x) = ln(1 + sin x) حتى الحد في x³.',en:'Find the Maclaurin expansion of f(x) = ln(1 + sin x) up to the term in x³.'},m:8,a:'depends',e:{ar:'x - x²/2 + x³/6',en:'x - x²/2 + x³/6'}},
+    {q:{ar:'حل المعادلة التفاضلية dy/dx + y tan x = cos x، علماً بأن y = 0 عندما x = 0.',en:'Solve the differential equation dy/dx + y tan x = cos x, given y = 0 when x = 0.'},m:9,a:'depends',e:{ar:'استخدام عامل التكامل (Integrating factor)',en:'Use integrating factor'}},
+    {q:{ar:'المنحنى القطبي r = a(1 + cos θ). أوجد مساحة المنطقة المحصورة بالمنحنى.',en:'Polar curve r = a(1 + cos θ). Find the area enclosed by the curve.'},m:8,a:'depends',e:{ar:'3πa²/2',en:'3πa²/2'}}
+  ]},
+  {id:'m1',title:{ar:'⚖️ Mechanics M1 (Jun 2013)',en:'⚖️ Mechanics M1 (Jun 2013)'},tier:'ial',color:'#10b981',code:{ar:'6677/01 — 13 مايو 2013 — ساعة ونصف — 75 درجة',en:'6677/01 — 13 May 2013 — 1h 30m — 75 Marks'},questions:[
+    {q:{ar:'جسيم يتحرك في خط مستقيم بتسارع ثابت. سرعته الأولية 5 m/s وتسارعه 2 m/s². (أ) أوجد سرعته بعد 4 ثوانٍ. (ب) أوجد المسافة المقطوعة في هذه الفترة.',en:'Particle moves in straight line with constant acc. Initial speed 5 m/s, acc 2 m/s². (a) Find speed after 4s. (b) Find distance.'},m:6,a:'depends',e:{ar:'(أ) 13 m/s (ب) 36 m',en:'(a) 13 m/s (b) 36 m'}},
+    {q:{ar:'جسيم كتلته 2 kg على مستوى خشن يميل بزاوية 30° على الأفقي. معامل الاحتكاك 0.2. أوجد تسارع الجسيم عندما ينزلق لأسفل المستوى.',en:'Particle mass 2 kg on rough plane inclined at 30°. Friction coeff 0.2. Find acceleration sliding down.'},m:8,a:'depends',e:{ar:'a = g(sin30 - 0.2cos30)',en:'a = g(sin30 - 0.2cos30)'}}
+  ]},
+  {id:'m2',title:{ar:'🏗️ Mechanics M2 (Jun 2013)',en:'🏗️ Mechanics M2 (Jun 2013)'},tier:'ial',color:'#ef4444',code:{ar:'6678/01 — 6 يونيو 2013 — ساعة ونصف — 75 درجة',en:'6678/01 — 6 Jun 2013 — 1h 30m — 75 Marks'},questions:[
+    {q:{ar:'قذيفة أُطلقت بسرعة 30 m/s بزاوية 45° فوق الأفقي. (أ) أوجد أقصى ارتفاع. (ب) أوجد المدى الأفقي.',en:'Projectile fired at 30 m/s at 45°. (a) Max height. (b) Horizontal range.'},m:8,a:'depends',svg:'m2_proj',e:{ar:'(أ) 22.96 m (ب) 91.84 m',en:'(a) 22.96 m (b) 91.84 m'}},
+    {q:{ar:'لوح منتظم AB طوله 4m ووزنه 50N يرتكز على دعامتين. أوجد ردود الفعل عند الدعامتين.',en:'Uniform rod AB 4m, 50N rests on two supports. Find reactions.'},m:7,a:'depends',e:{ar:'استخدام اتزان القوى والعزوم',en:'Use equilibrium of forces and moments'}}
+  ]},
+  {id:'s1',title:{ar:'📊 Statistics S1 (Jun 2013)',en:'📊 Statistics S1 (Jun 2013)'},tier:'ial',color:'#f59e0b',code:{ar:'6683/01 — 17 مايو 2013 — ساعة ونصف — 75 درجة',en:'6683/01 — 17 May 2013 — 1h 30m — 75 Marks'},questions:[
+    {q:{ar:'صندوق يحتوي على 5 كرات حمراء و 3 زرقاء. سُحبت كرتان عشوائياً بدون إرجاع. أوجد احتمال أن تكون كلا الكرتين حمراء.',en:'Box has 5 red, 3 blue. 2 drawn without replacement. Find P(both red).'},m:5,a:'depends',svg:'s1_venn',e:{ar:'(5/8) * (4/7) = 5/14',en:'(5/8) * (4/7) = 5/14'}},
+    {q:{ar:'المتغير العشوائي X يتبع التوزيع الطبيعي بمتوسط 50 وانحراف معياري 5. أوجد P(X > 55).',en:'RV X ~ N(50, 5²). Find P(X > 55).'},m:5,a:'depends',e:{ar:'P(Z > 1) = 0.1587',en:'P(Z > 1) = 0.1587'}}
+  ]},
+  {id:'s3',title:{ar:'📈 Statistics S3 (Jun 2013)',en:'📈 Statistics S3 (Jun 2013)'},tier:'ial',color:'#8b5cf6',code:{ar:'6691/01 — 13 يونيو 2013 — ساعة ونصف — 75 درجة',en:'6691/01 — 13 Jun 2013 — 1h 30m — 75 Marks'},questions:[
+    {q:{ar:'اختبار مربع كاي (Chi-squared) للاستقلالية على جدول طوارئ 2x2. أوجد الإحصاء والدرجة الحرة واستنتج عند مستوى 5%.',en:'Chi-squared test for independence on 2x2 contingency table. Find statistic, degrees of freedom, conclude at 5%.'},m:10,a:'depends',e:{ar:'حساب التوقعات E = (R*C)/n ومقارنة χ² بالقيمة الحرجة',en:'Calculate expected E=(R*C)/n and compare χ² to critical value'}},
+    {q:{ar:'توزيع المعاينة لمتوسط العينة. عينة حجمها 36 من مجتمع تباينه 16. أوجد احتمال أن يكون متوسط العينة أكبر من المتوسط الحقيقي بـ 1.',en:'Sampling distribution of sample mean. Sample size 36 from pop var 16. Find P(sample mean > true mean + 1).'},m:7,a:'depends',e:{ar:'الانحراف المعياري للمتوسط = 4/6، ثم استخدام Z',en:'SD of mean = 4/6, then use Z'}}
+  ]}
+];
+
+function buildQuestionIndex() {
+  allQuestions = [];
+  let totalCount = 0;
+  examData.forEach(p => {
+    p.questions.forEach((q, i) => {
+      allQuestions.push({paperId: p.id, questionIndex: i, id: `${p.id}-q${i}`});
+      totalCount++;
+    });
+  });
+  document.getElementById('total-questions-count').textContent = totalCount;
+}
+
+function saveState() {
+  const state = {
+    answers: {},
+    studentInfo: {
+      name: document.getElementById('studentName').value,
+      class: document.getElementById('studentClass').value,
+      date: document.getElementById('examDate').value
+    },
+    lang: currentLang,
+    darkMode: document.documentElement.classList.contains('dark'),
+    timeRemaining: timeRemaining
+  };
+  document.querySelectorAll('.answer-input').forEach(i => {
+    const c = i.closest('.question-card');
+    if (c) state.answers[c.id] = i.value;
+  });
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e) {}
+}
+
+function loadState() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    return saved ? JSON.parse(saved) : null;
+  } catch(e) { return null; }
+}
+
+function restoreState(state) {
+  if (!state) return;
+  if (state.answers) {
+    document.querySelectorAll('.answer-input').forEach(i => {
+      const c = i.closest('.question-card');
+      if (c && state.answers[c.id] !== undefined) {
+        i.value = state.answers[c.id];
+        checkAnswer(i);
+      }
+    });
+  }
+  if (state.studentInfo) {
+    if (state.studentInfo.name) document.getElementById('studentName').value = state.studentInfo.name;
+    if (state.studentInfo.class) document.getElementById('studentClass').value = state.studentInfo.class;
+    if (state.studentInfo.date) document.getElementById('examDate').value = state.studentInfo.date;
+  }
+  if (state.darkMode) toggleDarkMode(true);
+  if (state.timeRemaining && state.timeRemaining > 0) timeRemaining = state.timeRemaining;
+}
+
+function saveStudentInfo() { saveState(); }
+
+function renderSidebar() {
+  const sb = document.getElementById('sidebar');
+  let html = `<div class="sidebar-title">${T.sidebar_title[currentLang]}</div>`;
+  examData.forEach(p => {
+    const answeredCount = countAnsweredInPaper(p.id);
+    html += `<div class="sidebar-session">${p.title[currentLang]} <span class="answered-counter">${answeredCount}/${p.questions.length}</span></div>`;
+    p.questions.forEach((q, i) => {
+      const qId = `${p.id}-q${i}`;
+      const card = document.getElementById(qId);
+      let statusClass = '';
+      if (card) {
+        if (card.classList.contains('correct')) statusClass = 'answered correct';
+        else if (card.classList.contains('incorrect')) statusClass = 'answered incorrect';
+        else if (card.querySelector('.answer-input')?.value) statusClass = 'answered';
+      }
+      html += `<a href="#${qId}" class="sidebar-link ${statusClass}">${T.q_word[currentLang]} ${i+1} (${q.m}${T.marks[currentLang].charAt(0)})</a>`;
+    });
+  });
+  sb.innerHTML = html;
+}
+
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+function renderExam() {
+  const c = document.getElementById('exam-content');
+  let html = '';
+  examData.forEach(p => {
+    html += `<section id="${p.id}" class="page-break">
+      <div class="section-header" style="background:linear-gradient(135deg,${p.color},${p.color}cc);">
+        <h2><span class="paper-badge">📄 ${p.title[currentLang]}</span>
+        <span style="opacity:0.9;font-size:0.8rem;">${p.code[currentLang]}</span>
+        — ${p.questions.length} ${T.questions_word[currentLang]}</h2>
+      </div>`;
+    p.questions.forEach((q, i) => {
+      const qId = `${p.id}-q${i}`;
+      const svgHtml = q.svg && SVG_FIGURES[q.svg] ? SVG_FIGURES[q.svg] : '';
+      html += `<div class="question-card" id="${qId}">
+        <p style="margin:0 0 6px;">
+          <strong>${T.q_word[currentLang]} ${i+1}.</strong>
+          ${escapeHtml(q.q[currentLang])}
+          <span class="marks-badge">${q.m} ${T.marks[currentLang]}</span>
+        </p>
+        ${svgHtml}
+        <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:4px;">
+          <input type="text" class="answer-input" data-answer="${escapeHtml(q.a)}" data-paper="${p.id}"
+                 placeholder="${T.answer_ph[currentLang]}" oninput="handleAnswerInput(this)">
+          <button class="reveal-btn" onclick="toggleSubAnswer(this)">👁️</button>
+        </div>
+        <div class="answer-box hidden">✅ ${escapeHtml(q.e[currentLang])}</div>
+      </div>`;
+    });
+    html += `</section>`;
+  });
+  c.innerHTML = html;
+  document.querySelectorAll('.svg-caption').forEach(el => {
+    el.innerHTML = currentLang === 'ar' ? el.getAttribute('data-cap-ar') : el.getAttribute('data-cap-en');
+  });
+}
+
+function setLanguage(lang) {
+  currentLang = lang;
+  document.documentElement.lang = lang;
+  document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  document.getElementById('btn-ar').classList.toggle('active', lang === 'ar');
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  document.body.classList.toggle('en-mode', lang === 'en');
+  const elements = {
+    'time-label':'time_label','st-papers':'st_papers','st-questions':'st_questions',
+    'st-answered':'st_answered','st-marks':'st_marks','btn-toggle':'btn_toggle',
+    'btn-print':'btn_print','btn-expand':'btn_expand','btn-collapse':'btn_collapse',
+    'btn-submit':'btn_submit','btn-export':'btn_export','btn-reset':'btn_reset',
+    'btn-share':'btn_share','h-title':'h_title','h-sub':'h_sub','h-papers':'h_papers',
+    'h-warn':'h_warn','res-title':'res_title','rl-name':'rl_name','rl-date':'rl_date',
+    'rl-total':'rl_total','rl-rate':'rl_rate','btn-printres':'btn_printres',
+    'modal-title':'reset_title','modal-message':'reset_message'
+  };
+  Object.entries(elements).forEach(([id, key]) => {
+    const el = document.getElementById(id);
+    if (el && T[key]) el.innerHTML = T[key][lang];
+  });
+  document.getElementById('studentName').placeholder = T.ph_name[lang];
+  document.getElementById('studentClass').placeholder = T.ph_class[lang];
+  document.getElementById('examDate').placeholder = T.ph_date[lang];
+  const st = {};
+  document.querySelectorAll('.answer-input').forEach(i => {
+    const c = i.closest('.question-card');
+    if (c) st[c.id] = i.value;
+  });
+  renderSidebar(); renderExam();
+  document.querySelectorAll('.answer-input').forEach(i => {
+    const c = i.closest('.question-card');
+    if (c && st[c.id] !== undefined) {
+      i.value = st[c.id];
+      checkAnswer(i);
+    }
+  });
+  updateProgress();
+  saveState();
+}
+
+function toggleSubAnswer(btn) {
+  const ab = btn.closest('.question-card').querySelector('.answer-box');
+  if (ab) ab.classList.toggle('hidden');
+}
+function toggleAllAnswers() {
+  answersVisible = !answersVisible;
+  document.querySelectorAll('.answer-box').forEach(el => el.classList.toggle('hidden', !answersVisible));
+}
+function scrollToTop() { window.scrollTo({top: 0, behavior: 'smooth'}); }
+function collapseAll() { document.querySelectorAll('.answer-box').forEach(b => b.classList.add('hidden')); answersVisible = false; }
+function expandAll() { document.querySelectorAll('.answer-box').forEach(b => b.classList.remove('hidden')); answersVisible = true; }
+
+function toggleDarkMode(forceOn) {
+  const isDark = document.documentElement.classList.contains('dark');
+  if (forceOn !== undefined) document.documentElement.classList.toggle('dark', forceOn);
+  else document.documentElement.classList.toggle('dark', !isDark);
+  const darkBtn = document.getElementById('darkModeBtn');
+  if (darkBtn) darkBtn.textContent = document.documentElement.classList.contains('dark') ? '☀️' : '🌙';
+  saveState();
+}
+
+function showToast(message, duration = 2000) {
+  const toast = document.getElementById('toast');
+  toast.textContent = message;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), duration);
+}
+
+function confirmReset() { document.getElementById('resetModal').classList.add('show'); }
+function closeModal() { document.getElementById('resetModal').classList.remove('show'); }
+
+function resetExam() {
+  document.querySelectorAll('.answer-input').forEach(i => {
+    i.value = '';
+    i.classList.remove('is-correct', 'is-incorrect');
+    const card = i.closest('.question-card');
+    if (card) card.classList.remove('correct', 'incorrect');
+  });
+  document.getElementById('studentName').value = '';
+  document.getElementById('studentClass').value = '';
+  document.getElementById('examDate').value = '';
+  document.getElementById('results-panel').classList.add('hidden');
+  collapseAll();
+  updateProgress();
+  saveState();
+  renderSidebar();
+  closeModal();
+  showToast(T.reset_success[currentLang]);
+}
+
+function exportData() {
+  const state = loadState() || {answers: {}, studentInfo: {}};
+  document.querySelectorAll('.answer-input').forEach(i => {
+    const c = i.closest('.question-card');
+    if (c) state.answers[c.id] = i.value;
+  });
+  state.studentInfo = {
+    name: document.getElementById('studentName').value,
+    class: document.getElementById('studentClass').value,
+    date: document.getElementById('examDate').value
+  };
+  state.exportDate = new Date().toISOString();
+  const blob = new Blob([JSON.stringify(state, null, 2)], {type: 'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `Edexcel_IAL_Math_Jun_2013_${new Date().toISOString().split('T')[0]}.json`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showToast(T.export_success[currentLang]);
+}
+
+function normalize(s) {
+  if (!s) return '';
+  return s.toLowerCase().replace(/\s+/g, '').replace(/[×*]/g, '*').replace(/[−]/g, '-')
+    .replace(/،/g, ',').replace(/÷/g, '/').replace(/²/g, '^2').replace(/³/g, '^3')
+    .replace(/√/g, 'sqrt').replace(/π/g, 'pi').replace(/∛/g, 'cbrt').replace(/%/g,'')
+    .replace(/\[/g,'').replace(/\]/g,'').replace(/\(/g,'').replace(/\)/g,'');
+}
+
+function checkAnswer(input) {
+  const correct = input.dataset.answer;
+  const user = input.value.trim();
+  const card = input.closest('.question-card');
+  if (!correct || correct === 'shown' || correct === 'depends' || correct === 'construction' || correct === 'proof' || correct === 'tree' || correct === 'drawing' || correct === 'coords' || correct === 'description' || !user) {
+    card.classList.remove('correct', 'incorrect');
+    input.classList.remove('is-correct', 'is-incorrect');
+    updateProgress(); renderSidebar(); return;
+  }
+  const cn = normalize(correct);
+  const un = normalize(user);
+  const parts = cn.split(',').map(p => p.trim()).filter(p => p.length > 0);
+  let isCorrect = false;
+  if (un === cn) isCorrect = true;
+  if (!isCorrect) {
+    const userParts = un.split(',').map(p => p.trim()).filter(p => p.length > 0);
+    if (userParts.length > 0 && userParts.every(up => parts.some(cp => up === cp || cp.includes(up) || up.includes(cp)))) {
+      isCorrect = true;
+    }
+  }
+  if (!isCorrect) {
+    const userNum = parseFloat(un);
+    if (!isNaN(userNum)) {
+      for (const part of parts) {
+        const partNum = parseFloat(part);
+        if (!isNaN(partNum)) {
+          const tolerance = Math.abs(partNum * 0.02) + 0.01;
+          if (Math.abs(userNum - partNum) <= tolerance) { isCorrect = true; break; }
+        }
+      }
+    }
+  }
+  if (isCorrect) {
+    card.classList.add('correct'); card.classList.remove('incorrect');
+    input.classList.add('is-correct'); input.classList.remove('is-incorrect');
+  } else {
+    card.classList.add('incorrect'); card.classList.remove('correct');
+    input.classList.add('is-incorrect'); input.classList.remove('is-correct');
+  }
+  updateProgress(); renderSidebar(); saveState();
+}
+
+function handleAnswerInput(input) { checkAnswer(input); }
+
+function countAnsweredInPaper(paperId) {
+  let count = 0;
+  document.querySelectorAll(`.answer-input[data-paper="${paperId}"]`).forEach(i => {
+    if (i.value.trim()) count++;
+  });
+  return count;
+}
+
+function updateProgress() {
+  const inputs = document.querySelectorAll('.answer-input');
+  let answered = 0;
+  inputs.forEach(i => { if (i.value.trim()) answered++; });
+  const pct = inputs.length > 0 ? Math.round(answered / inputs.length * 100) : 0;
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('progressText').textContent = pct + '%';
+  document.getElementById('answered-count').textContent = answered;
+}
+
+function navigateQuestion(direction) {
+  if (allQuestions.length === 0) return;
+  currentQuestionIndex = (currentQuestionIndex + direction + allQuestions.length) % allQuestions.length;
+  const q = allQuestions[currentQuestionIndex];
+  const el = document.getElementById(q.id);
+  if (el) {
+    el.scrollIntoView({behavior: 'smooth', block: 'start'});
+    el.classList.add('ring-2', 'ring-violet-400');
+    setTimeout(() => el.classList.remove('ring-2', 'ring-violet-400'), 1500);
+  }
+}
+
+function gradeExam() {
+  let totalCorrect = 0, totalQ = 0, totalMarks = 0, earnedMarks = 0;
+  document.querySelectorAll('.answer-input').forEach(input => {
+    totalQ++;
+    const card = input.closest('.question-card');
+    const correct = input.dataset.answer;
+    const user = input.value.trim();
+    const marks = parseInt(card.querySelector('.marks-badge').textContent);
+    totalMarks += marks;
+    if (correct && correct !== 'shown' && correct !== 'depends' && correct !== 'construction' && correct !== 'proof' && correct !== 'tree' && correct !== 'drawing' && correct !== 'coords' && correct !== 'description' && user) {
+      const cn = normalize(correct);
+      const un = normalize(user);
+      const parts = cn.split(',').map(p => p.trim()).filter(p => p.length > 0);
+      let isCorrect = false;
+      if (un === cn) isCorrect = true;
+      if (!isCorrect) {
+        const userParts = un.split(',').map(p => p.trim()).filter(p => p.length > 0);
+        if (userParts.length > 0 && userParts.every(up => parts.some(cp => up === cp || cp.includes(up) || up.includes(cp)))) {
+          isCorrect = true;
+        }
+      }
+      if (!isCorrect) {
+        const userNum = parseFloat(un);
+        if (!isNaN(userNum)) {
+          for (const part of parts) {
+            const partNum = parseFloat(part);
+            if (!isNaN(partNum)) {
+              const tolerance = Math.abs(partNum * 0.02) + 0.01;
+              if (Math.abs(userNum - partNum) <= tolerance) { isCorrect = true; break; }
+            }
+          }
+        }
+      }
+      if (isCorrect) {
+        totalCorrect++;
+        earnedMarks += marks;
+        if (card) { card.classList.add('correct'); card.classList.remove('incorrect'); }
+      } else {
+        if (card) { card.classList.add('incorrect'); card.classList.remove('correct'); }
+      }
+    }
+  });
+  const score = totalMarks > 0 ? Math.round(earnedMarks / totalMarks * 100) : 0;
+  document.getElementById('res-name').textContent = document.getElementById('studentName').value || T.student_default[currentLang];
+  document.getElementById('res-date').textContent = document.getElementById('examDate').value || new Date().toLocaleDateString();
+  document.getElementById('res-total').textContent = `${earnedMarks} / ${totalMarks}`;
+  document.getElementById('success-percent').textContent = score + '%';
+  const badge = document.getElementById('success-badge');
+  if (score >= 90) { badge.textContent = T.grade_excellent[currentLang]; badge.className = 'success-badge grade-excellent'; }
+  else if (score >= 75) { badge.textContent = T.grade_good[currentLang]; badge.className = 'success-badge grade-good'; }
+  else if (score >= 50) { badge.textContent = T.grade_pass[currentLang]; badge.className = 'success-badge grade-pass'; }
+  else { badge.textContent = T.grade_fail[currentLang]; badge.className = 'success-badge grade-fail'; }
+  document.getElementById('results-panel').classList.remove('hidden');
+  document.getElementById('results-panel').scrollIntoView({behavior: 'smooth'});
+  renderSidebar();
+}
+
+function shareResults() {
+  const name = document.getElementById('res-name').textContent;
+  const total = document.getElementById('res-total').textContent;
+  const percent = document.getElementById('success-percent').textContent;
+  const badge = document.getElementById('success-badge').textContent;
+  const text = `🎓 نتائج Edexcel IAL Math Jun 2013\n👤 ${name}\n📊 ${total} (${percent})\n🏆 ${badge}\n\nPrepared by Mr. Mohammed Hesham`;
+  if (navigator.share) {
+    navigator.share({title: 'نتائج الامتحان', text: text}).catch(() => copyToClipboard(text));
+  } else { copyToClipboard(text); }
+}
+
+function copyToClipboard(text) {
+  navigator.clipboard.writeText(text).then(() => showToast(T.copy_success[currentLang])).catch(() => {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    try { document.execCommand('copy'); showToast(T.copy_success[currentLang]); } catch(e) {}
+    document.body.removeChild(textarea);
+  });
+}
+
+function formatTime(seconds) {
+  const h = Math.floor(seconds / 3600);
+  const m = Math.floor((seconds % 3600) / 60);
+  const s = seconds % 60;
+  return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+}
+
+function updateTimerDisplay() {
+  const display = document.getElementById('timerDisplay');
+  if (display) {
+    display.textContent = formatTime(timeRemaining);
+    if (timeRemaining <= 600) display.classList.add('warning');
+    else display.classList.remove('warning');
+  }
+}
+
+function startTimer() {
+  updateTimerDisplay();
+  timerInterval = setInterval(() => {
+    if (!timerRunning) return;
+    timeRemaining--;
+    updateTimerDisplay();
+    if (timeRemaining <= 0) {
+      clearInterval(timerInterval);
+      alert(T.timeup[currentLang]);
+      gradeExam();
+    }
+    if (timeRemaining % 30 === 0) saveState();
+  }, 1000);
+}
+
+function toggleTimer() {
+  timerRunning = !timerRunning;
+  const btn = document.getElementById('timerToggle');
+  if (btn) btn.textContent = timerRunning ? '⏸️' : '▶️';
+}
+
+document.addEventListener('click', function(e) {
+  if (e.target.matches('a[href^="#"]')) {
+    e.preventDefault();
+    const href = e.target.getAttribute('href');
+    if (href && href.length > 1) {
+      const target = document.querySelector(href);
+      if (target) {
+        target.scrollIntoView({behavior: 'smooth', block: 'start'});
+        const qId = href.substring(1);
+        const idx = allQuestions.findIndex(q => q.id === qId);
+        if (idx !== -1) currentQuestionIndex = idx;
+      }
+    }
+  }
+});
+
+document.addEventListener('keydown', function(e) {
+  if (e.altKey && e.key === 'ArrowLeft') { navigateQuestion(currentLang === 'ar' ? 1 : -1); e.preventDefault(); }
+  if (e.altKey && e.key === 'ArrowRight') { navigateQuestion(currentLang === 'ar' ? -1 : 1); e.preventDefault(); }
+  if (e.ctrlKey && e.key === 's') { saveState(); showToast(T.save_success[currentLang]); e.preventDefault(); }
+});
+
+setInterval(saveState, 10000);
+window.addEventListener('beforeunload', saveState);
+
+window.addEventListener('DOMContentLoaded', () => {
+  buildQuestionIndex();
+  renderSidebar();
+  renderExam();
+  const savedState = loadState();
+  if (savedState) {
+    restoreState(savedState);
+    if (savedState.lang) setLanguage(savedState.lang);
+  }
+  startTimer();
+  updateProgress();
+});
+</script>
+</body>
+</html>
